@@ -9,4 +9,14 @@ class Food extends Model
 {
     use HasFactory;
     protected $guarded=["id"];
+
+    public function stocks()
+    {
+        return $this->hasMany(FoodStockHistory::class);
+    }
+
+    public function feedings()
+    {
+        return $this->hasMany(FeedingHistory::class);
+    }
 }

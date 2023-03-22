@@ -9,4 +9,9 @@ class Sales extends Model
 {
     use HasFactory;
     protected $guarded = ["id"];
+
+    public function lot()
+    {
+        return $this->belongsTo(Lot::class);
+    }
 }

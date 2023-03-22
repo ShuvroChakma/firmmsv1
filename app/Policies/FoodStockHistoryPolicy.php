@@ -18,7 +18,7 @@ class FoodStockHistoryPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,6 +30,7 @@ class FoodStockHistoryPolicy
      */
     public function view(User $user, FoodStockHistory $foodStockHistory)
     {
+        return true;
         //
     }
 
@@ -42,6 +43,7 @@ class FoodStockHistoryPolicy
     public function create(User $user)
     {
         //
+        return true;
     }
 
     /**
@@ -54,6 +56,7 @@ class FoodStockHistoryPolicy
     public function update(User $user, FoodStockHistory $foodStockHistory)
     {
         //
+        return true;
     }
 
     /**
@@ -66,6 +69,7 @@ class FoodStockHistoryPolicy
     public function delete(User $user, FoodStockHistory $foodStockHistory)
     {
         //
+        return true;
     }
 
     /**
@@ -78,6 +82,7 @@ class FoodStockHistoryPolicy
     public function restore(User $user, FoodStockHistory $foodStockHistory)
     {
         //
+        return true;
     }
 
     /**
@@ -90,5 +95,6 @@ class FoodStockHistoryPolicy
     public function forceDelete(User $user, FoodStockHistory $foodStockHistory)
     {
         //
+        return true;
     }
 }

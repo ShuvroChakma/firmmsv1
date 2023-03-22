@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\VaccinationHistoryResource\Pages;
+namespace App\Filament\Resources\FoodStockHistoryResource\Pages;
 
-use App\Filament\Resources\VaccinationHistoryResource;
-use App\Models\Medicine;
+use App\Filament\Resources\FoodStockHistoryResource;
+use App\Models\Food;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 
-class EditVaccinationHistory extends EditRecord
+class EditFoodStockHistory extends EditRecord
 {
-    protected static string $resource = VaccinationHistoryResource::class;
+    protected static string $resource = FoodStockHistoryResource::class;
 
     protected function getActions(): array
     {
@@ -18,10 +18,9 @@ class EditVaccinationHistory extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        Medicine::find($data["medicine_id"])->increment("stock", $record->quantity - $data['quantity']);
+        Food::find($data["food_id"])->decrement("stock", $record->quantity - $data['quantity']);
         // dd($data);
 
         $record->update($data);

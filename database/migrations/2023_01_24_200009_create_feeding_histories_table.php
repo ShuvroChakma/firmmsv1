@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('feeding_histories', function (Blueprint $table) {
             $table->id();
             $table->date("date");
-            $table->integer("price");
+            $table->float("quantity");
             $table->foreignId("food_id")->constrained()->onDelete("cascade");
             $table->timestamps();
         });

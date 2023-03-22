@@ -21,6 +21,9 @@ class FoodResource extends Resource
     protected static ?string $model = Food::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationGroup = 'Food';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -28,9 +31,8 @@ class FoodResource extends Resource
             ->schema([
                 Card::make()->schema([
                     TextInput::make("name")->required(),
-                    TextInput::make("stock")->required(),
 
-
+                TextInput::make("stock")->required(),
                     ]),
 
 
