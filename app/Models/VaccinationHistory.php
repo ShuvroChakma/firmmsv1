@@ -9,4 +9,10 @@ class VaccinationHistory extends Model
 {
     use HasFactory;
     protected $guarded = ["id"];
+    protected $with = ["medicine"];
+
+    public function medicine()
+    {
+        return $this->belongsTo(Medicine::class);
+    }
 }

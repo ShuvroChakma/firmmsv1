@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lots', function (Blueprint $table) {
-            $table->id();
-            $table->string("name");
-            $table->integer("quantity")->default(0);
-            $table->integer("quantity_actual")->default(0);
-            $table->integer("price");
-            $table->date("date");
-            $table->timestamps();
+        Schema::table('food', function (Blueprint $table) {
+
+            $table->string('name_stock')->virtualAs('concat(name, \' \', stock)');
         });
     }
 
@@ -31,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lots');
+        Schema::table('food', function (Blueprint $table) {
+            $table->dropColumn("name_stock");
+        });
     }
 };

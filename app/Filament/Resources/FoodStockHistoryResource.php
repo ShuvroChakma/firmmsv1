@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\FeedingResource\Pages;
-use App\Filament\Resources\FeedingResource\RelationManagers;
-use App\Models\Feeding;
+use App\Filament\Resources\FoodStockHistoryResource\Pages;
+use App\Filament\Resources\FoodStockHistoryResource\RelationManagers;
 use App\Models\FeedingHistory;
 use App\Models\Food;
+use App\Models\FoodStockHistory;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
@@ -21,12 +21,11 @@ use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class FeedingResource extends Resource
+class FoodStockHistoryResource extends Resource
 {
-    protected static ?string $model = FeedingHistory::class;
+    protected static ?string $model = FoodStockHistory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
-
     protected static ?string $navigationGroup = 'Food';
 
     protected static ?int $navigationSort = 3;
@@ -37,22 +36,24 @@ class FeedingResource extends Resource
             ->schema([
                 Card::make()->schema([
                     DatePicker::make('date')->required(),
-                TextInput::make("quantity")->required(),
-                Select::make('food_id')
-                ->label('Food')
-                ->options(Food::all()->pluck('name_stock', 'id'))
-                ->searchable(),
-                    ]),
+                    TextInput::make("quantity")->numeric()->required(),
+                    TextInput::make("price")->required(),
+                    Select::make('food_id')
+                        ->label('Food')
+                        ->options(Food::all()->pluck('name_stock', 'id'))
+                        ->searchable(),
+                ]),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([TextColumn::make("food.name")->searchable(),
-            TextColumn::make("quantity")->sortable(),
-            TextColumn::make("date")->sortable(),
-
+            ->columns([
+                TextColumn::make("food.name")->searchable(),
+                TextColumn::make("quantity")->sortable(),
+                TextColumn::make("price")->sortable(),
+                TextColumn::make("date")->sortable()
             ])
             ->filters([
                 Filter::make('created_at')
@@ -90,9 +91,9 @@ class FeedingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFeedings::route('/'),
-            'create' => Pages\CreateFeeding::route('/create'),
-            'edit' => Pages\EditFeeding::route('/{record}/edit'),
+            'index' => Pages\ListFoodStockHistories::route('/'),
+            'create' => Pages\CreateFoodStockHistory::route('/create'),
+            'edit' => Pages\EditFoodStockHistory::route('/{record}/edit'),
         ];
     }
 }

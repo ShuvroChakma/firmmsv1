@@ -17,12 +17,16 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 
 class LotResource extends Resource
 {
     protected static ?string $model = Lot::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?string $navigationGroup = 'Lot';
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -46,8 +50,22 @@ class LotResource extends Resource
                 TextColumn::make("price"),
                 TextColumn::make("date"),
             ])
-            ->filters([
-                //
+            ->filters([Filter::make('created_at')
+                ->form([
+                    Forms\Components\DatePicker::make('date_from'),
+                    Forms\Components\DatePicker::make('date_until')->default(now()),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['date_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('date', '>=', $date),
+                        )
+                        ->when(
+                            $data['date_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('date', '<=', $date),
+                        );
+                })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

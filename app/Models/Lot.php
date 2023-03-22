@@ -10,4 +10,9 @@ class Lot extends Model
     use HasFactory;
 
     protected $guarded = ["id"];
+
+    public function sales()
+    {
+        return $this->hasMany(Sales::class);
+    }
 }
